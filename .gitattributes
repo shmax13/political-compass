@@ -1,0 +1,2 @@
+speeches/speeches.json filter=lfs diff=lfs merge=lfs -text
+speeches/preprocessed_speeches.json filter=lfs diff=lfs merge=lfs -text
