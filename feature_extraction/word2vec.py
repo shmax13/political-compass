@@ -7,8 +7,8 @@ from .base import BaseFeatureExtractor
 class Word2VecExtractor(BaseFeatureExtractor):
     def __init__(self):
         self.model = api.load('word2vec-google-news-300')
-        # Note: Word2Vec model itself is not a vectorizer, but we'll manage feature extraction here.
-        super().__init__(vectorizer=None)  # No vectorizer for Word2Vec
+        # TODO: Word2Vec model itself is not a vectorizer, but we'll manage feature extraction here for now
+        super().__init__(vectorizer=None)
 
     def vectorize_speech(self, speech):
         """Vectorize a single speech using the Word2Vec model."""

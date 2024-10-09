@@ -1,4 +1,3 @@
-import json
 import joblib
 import os
 import itertools
@@ -17,17 +16,16 @@ def load_input_file(file_path):
 
 def classify_input(model, vectorizer, input_text):
     """Classify the input text using the provided model."""
-    # Preprocess and extract features
-    features = vectorizer.transform([input_text])  # Assuming your vectorizer is fitted on the training data
+    # transform and predict
+    features = vectorizer.transform([input_text])  
     prediction = model.predict(features)
-    return prediction[0]  # Return the single prediction
+    return prediction[0]  
 
 def main():
-    # Specify the classifiers and vectorizers you want to use
-    classifiers = ['Logistic_Regression', 'Random_Forest_Classifier', 'Support_Vector_Classifier']  # Add your classifiers here
-    vectorizers = ['TfidfExtractor', 'BagOfWordsExtractor', 'NgramsExtractor']  # Add your vectorizers here
+    classifiers = ['Logistic_Regression', 'Random_Forest_Classifier', 'Support_Vector_Classifier']
+    vectorizers = ['TfidfExtractor', 'BagOfWordsExtractor', 'NgramsExtractor'] # TODO w2vec
 
-    # Store predictions for majority voting
+    # Store predictions for final majority voting
     all_predictions = []
 
     # Loop through all combinations of classifiers and vectorizers
@@ -46,18 +44,17 @@ def main():
         vectorizer = load_model(vectorizer_path)
 
         # Load input text
-        input_file_path = 'speeches/trump.txt'  
+        input_file_path = 'speeches/single/input.txt'  
         input_text = load_input_file(input_file_path)
 
         # Classify the input text
         prediction = classify_input(model, vectorizer, input_text)
-        all_predictions.append(prediction)  # Store the prediction
+        all_predictions.append(prediction) 
 
-        # Print the result for the current classifier and vectorizer
         print(f"Prediction for {extractor_name} and {classifier_name}: {prediction}")
 
     # Calculate the majority vote
-    final_prediction = Counter(all_predictions).most_common(1)[0][0]  # Get the most common prediction
+    final_prediction = Counter(all_predictions).most_common(1)[0][0] 
     print(f"Final prediction (majority vote): {final_prediction}")
 
 if __name__ == '__main__':
