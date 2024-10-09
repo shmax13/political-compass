@@ -1,50 +1,55 @@
 import json
-from sklearn.feature_extraction.text import TfidfVectorizer
+from feature_extraction.tfidf import extract_tfidf
+from feature_extraction.bow import extract_bow
+from feature_extraction.word2vec import extract_word2vec
+from feature_extraction.ngrams import extract_ngrams
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
-from sklearn.model_selection import train_test_split
-from classifiers.logistic_regression import LogisticRegressionClassifier
-from classifiers.random import RandomClassifier
 
+# Function to load preprocessed speeches
 def load_preprocessed_data(filename='./speeches/preprocessed_speeches.json'):
     with open(filename, 'r') as f:
         data = json.load(f)
     print('Speeches and labels loaded successfully.')
     return data['speeches'], data['labels']
 
+# Main function
 def main():
     # Load preprocessed data
     cleaned_speeches, labels = load_preprocessed_data()
 
     # Create a list of classifiers
-    classifiers = [
-        RandomClassifier(),
-        LogisticRegressionClassifier()]
+    classifiers = {
+        'Logistic Regression': LogisticRegression(),
+        'Support Vector Classifier': SVC(),
+        'Random Forest Classifier': RandomForestClassifier()
+    }
 
-    # Feature extraction using TF-IDF
-    vectorizer = TfidfVectorizer(max_features=5000)  # Limit features to avoid overfitting
-    X = vectorizer.fit_transform(cleaned_speeches)
-    y = labels
+    # Dictionary of feature extraction methods
+    extraction_methods = {
+        'TF-IDF': extract_tfidf,
+        'Bag of Words (BoW)': extract_bow,
+        'Word2Vec': extract_word2vec,
+        'N-grams (Bigrams)': extract_ngrams
+    }
 
-    # Split the data into training and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    for classifier in classifiers:
-        print(f"Training {classifier.__class__.__name__}...")
-
-        # Train the classifier
-        classifier.fit(X_train, y_train)
-
-        # Make predictions on the test set
-        predictions = classifier.predict(X_test)
-
-        # Evaluate the classifier
-        accuracy = accuracy_score(y_test, predictions)
-        report = classification_report(y_test, predictions, zero_division=0)
-
-        # Print the results
-        print(f"Accuracy: {accuracy * 100:.2f}%")
-        print("Classification Report:")
-        print(report)
+    # Loop through each feature extraction method
+    for method_name, extraction_function in extraction_methods.items():
+        print(f"\nEvaluating {method_name}...")
+        X_train, X_test, y_train, y_test = extraction_function(cleaned_speeches, labels)
+        
+        # Loop through each classifier
+        for name, classifier in classifiers.items():
+            print(f"Training {name}...")
+            classifier.fit(X_train, y_train)
+            predictions = classifier.predict(X_test)
+            accuracy = accuracy_score(y_test, predictions)
+            report = classification_report(y_test, predictions, zero_division=0)
+            print(f"Accuracy ({method_name}) with {name}: {accuracy * 100:.2f}%")
+            print("Classification Report:")
+            print(report)
 
 if __name__ == '__main__':
     main()
