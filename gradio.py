@@ -2,30 +2,25 @@ import joblib
 import os
 import itertools
 from collections import Counter
+import gradio as gr
 
 def load_model(model_path):
     """Load the trained model from a file."""
     model = joblib.load(model_path)
     return model
 
-def load_input_file(file_path):
-    """Read input text from a file."""
-    with open(file_path, 'r') as file:
-        text = file.read()
-    return text
-
 def classify_input(model, vectorizer, input_text):
     """Classify the input text using the provided model."""
-    # transform and predict
+    # Transform and predict
     features = vectorizer.transform([input_text])  
     prediction = model.predict(features)
     return prediction[0]  
 
-def main():
+def make_prediction(input_text):
+    """Make predictions based on user input."""
     classifiers = ['Logistic_Regression', 'Random_Forest_Classifier', 'Support_Vector_Classifier']
-    vectorizers = ['TfidfExtractor', 'BagOfWordsExtractor', 'NgramsExtractor'] # TODO w2vec
+    vectorizers = ['TfidfExtractor', 'BagOfWordsExtractor', 'NgramsExtractor']
 
-    # Store predictions for final majority voting
     all_predictions = []
 
     # Loop through all combinations of classifiers and vectorizers
@@ -43,19 +38,24 @@ def main():
         model = load_model(model_path)
         vectorizer = load_model(vectorizer_path)
 
-        # Load input text
-        input_file_path = 'speeches/single/input.txt'  
-        input_text = load_input_file(input_file_path)
-
         # Classify the input text
         prediction = classify_input(model, vectorizer, input_text)
         all_predictions.append(prediction) 
 
-        print(f"Prediction for {extractor_name} and {classifier_name}: {prediction}")
-
     # Calculate the majority vote
     final_prediction = Counter(all_predictions).most_common(1)[0][0] 
-    print(f"Final prediction (majority vote): {final_prediction}")
+    return final_prediction
+
+def main():
+    # Create a Gradio interface
+    iface = gr.Interface(
+        fn=make_prediction, 
+        inputs=gr.Textbox(label="Input Text"), 
+        outputs=gr.Label(label="Prediction"),
+        title="Political Speech Classifier",
+        description="Enter text to classify using various classifiers."
+    )
+    iface.launch()
 
 if __name__ == '__main__':
     main()
