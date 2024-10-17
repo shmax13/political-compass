@@ -89,6 +89,10 @@ def make_prediction(input_text):
     final_x_prediction = np.mean(all_regression_predictions['x']) if all_regression_predictions['x'] else None
     final_y_prediction = np.mean(all_regression_predictions['y']) if all_regression_predictions['y'] else None
 
+    # Format the regression predictions to 4 decimals 
+    final_x_prediction = f"{final_x_prediction:.3f}" if final_x_prediction is not None else None
+    final_y_prediction = f"{final_y_prediction:.3f}" if final_y_prediction is not None else None
+
     return final_classification_prediction, (final_x_prediction, final_y_prediction)
 
 def main():
