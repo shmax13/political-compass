@@ -15,50 +15,50 @@ stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
 president_positions = {
-    'Andrew Jackson': (0.6, 0.6),      # Right-leaning authoritarian, despite some populist rhetoric
-    'Martin Van Buren': (-0.5, -0.3),  # Moderate left libertarian
-    'James K. Polk': (-0.6, 0.3),      # Left-leaning authoritarian due to expansionist policies
-    'Franklin Pierce': (-0.4, 0.1),    # Center-left with moderate authoritarian tendencies
-    'James Buchanan': (-0.3, 0.2),     # Moderate left, slightly authoritarian
-    'Grover Cleveland': (-0.4, -0.1),  # Center-left, moderate libertarian
-    'Woodrow Wilson': (-0.6, 0.8),     # Left-leaning authoritarian (due to WWI policies)
-    'Franklin D. Roosevelt': (-0.9, 0.6),  # Strong left, authoritarian (New Deal, WWII)
-    'Harry S. Truman': (-0.7, 0.4),    # Strong left-leaning authoritarian (Cold War)
-    'John F. Kennedy': (-0.4, -0.2),   # Center-left, moderate libertarian
-    'Lyndon B. Johnson': (-0.5, 0.5),  # Left-leaning authoritarian (Great Society)
-    'Jimmy Carter': (-0.4, -0.3),      # Moderate left, moderate libertarian
-    'Bill Clinton': (-0.3, -0.3),      # Center-left, moderate libertarian
-    'Barack Obama': (-0.4, -0.2),      # Center-left, moderate libertarian
-    'Joe Biden': (-0.5, 0.2),          # Moderate left, moderate authoritarian
-    'Thomas Jefferson': (-0.7, -0.8),  # Strong left, strongly libertarian (anti-centralization)
-    'James Madison': (-0.6, -0.7),     # Left-leaning libertarian (focused on individual rights)
-    'James Monroe': (-0.5, -0.5),      # Moderate left, libertarian (Monroe Doctrine)
-    'Andrew Johnson': (0.5, 0.4),      # Slightly right-leaning, authoritariane
-    'Abraham Lincoln': (-0.6, 0.7),    # Left-leaning authoritarian (due to wartime powers)
-    'Ulysses S. Grant': (0.4, 0.4),    # Right-leaning authoritarian (Reconstruction policies)
-    'Rutherford B. Hayes': (0.3, 0.2), # Slightly right-leaning, authoritarian
-    'James A. Garfield': (0.2, 0.1),   # Moderate right, slightly authoritarian
-    'Chester A. Arthur': (0.4, 0.1),   # Moderate right, moderately authoritarian
-    'Benjamin Harrison': (0.5, 0.3),   # Right-leaning authoritarian
-    'William McKinley': (0.6, 0.4),    # Strongly right-leaning, authoritarian
-    'Theodore Roosevelt': (-0.5, 0.5), # Left-leaning authoritarian (progressive policies)
-    'William Taft': (0.4, 0.3),        # Right-leaning authoritarian
-    'Calvin Coolidge': (0.8, 0.4),     # Strongly right-leaning, authoritarian
-    'Herbert Hoover': (0.7, 0.5),      # Right-leaning authoritarian
-    'Dwight D. Eisenhower': (0.3, 0.2),# Moderate right, slightly authoritarian
-    'Richard M. Nixon': (0.7, 0.8),    # Right-leaning authoritarian
-    'Gerald Ford': (0.4, 0.3),         # Right-leaning authoritarian
-    'Ronald Reagan': (0.9, 0.7),       # Strongly right-leaning, authoritarian
-    'George H. W. Bush': (0.6, 0.5),   # Right-leaning authoritarian
-    'George W. Bush': (0.6, 0.5),      # Right-leaning authoritarian
-    'Donald Trump': (0.8, 0.7),        # Strongly right-leaning, authoritarian
-    'John Adams': (0.3, 0.5),          # Moderate right, authoritarian (Federalist policies)
-    'John Quincy Adams': (0.2, 0.2),   # Moderate right, slightly authoritarian
-    'William Harrison': (0.5, 0.3),    # Right-leaning authoritarian
-    'John Tyler': (0.6, 0.4),          # Right-leaning authoritarian
-    'Zachary Taylor': (0.5, 0.4),      # Right-leaning authoritarian
-    'Millard Fillmore': (0.4, 0.3),    # Right-leaning authoritarian
-    'Warren G. Harding': (0.7, 0.6)    # Right-leaning authoritarian
+    'Andrew Jackson': (6, 6),      # Right-leaning authoritarian, despite some populist rhetoric
+    'Martin Van Buren': (-5, -3),  # Moderate left libertarian
+    'James K. Polk': (-6, 3),      # Left-leaning authoritarian due to expansionist policies
+    'Franklin Pierce': (-4, 1),    # Center-left with moderate authoritarian tendencies
+    'James Buchanan': (-3, 2),     # Moderate left, slightly authoritarian
+    'Grover Cleveland': (-4, -1),  # Center-left, moderate libertarian
+    'Woodrow Wilson': (-6, 8),     # Left-leaning authoritarian (due to WWI policies)
+    'Franklin D. Roosevelt': (-9, 6),  # Strong left, authoritarian (New Deal, WWII)
+    'Harry S. Truman': (-7, 4),    # Strong left-leaning authoritarian (Cold War)
+    'John F. Kennedy': (-4, -2),   # Center-left, moderate libertarian
+    'Lyndon B. Johnson': (-5, 5),  # Left-leaning authoritarian (Great Society)
+    'Jimmy Carter': (-4, -3),      # Moderate left, moderate libertarian
+    'Bill Clinton': (-3, -3),      # Center-left, moderate libertarian
+    'Barack Obama': (-4, -2),      # Center-left, moderate libertarian
+    'Joe Biden': (-5, 2),          # Moderate left, moderate authoritarian
+    'Thomas Jefferson': (-7, -8),  # Strong left, strongly libertarian (anti-centralization)
+    'James Madison': (-6, -7),     # Left-leaning libertarian (focused on individual rights)
+    'James Monroe': (-5, -5),      # Moderate left, libertarian (Monroe Doctrine)
+    'Andrew Johnson': (5, 4),      # Slightly right-leaning, authoritarian
+    'Abraham Lincoln': (-6, 7),    # Left-leaning authoritarian (due to wartime powers)
+    'Ulysses S. Grant': (4, 4),    # Right-leaning authoritarian (Reconstruction policies)
+    'Rutherford B. Hayes': (3, 2), # Slightly right-leaning, authoritarian
+    'James A. Garfield': (2, 1),   # Moderate right, slightly authoritarian
+    'Chester A. Arthur': (4, 1),   # Moderate right, moderately authoritarian
+    'Benjamin Harrison': (5, 3),   # Right-leaning authoritarian
+    'William McKinley': (6, 4),    # Strongly right-leaning, authoritarian
+    'Theodore Roosevelt': (-5, 5), # Left-leaning authoritarian (progressive policies)
+    'William Taft': (4, 3),        # Right-leaning authoritarian
+    'Calvin Coolidge': (8, 4),     # Strongly right-leaning, authoritarian
+    'Herbert Hoover': (7, 5),      # Right-leaning authoritarian
+    'Dwight D. Eisenhower': (3, 2),# Moderate right, slightly authoritarian
+    'Richard M. Nixon': (7, 8),    # Right-leaning authoritarian
+    'Gerald Ford': (4, 3),         # Right-leaning authoritarian
+    'Ronald Reagan': (9, 7),       # Strongly right-leaning, authoritarian
+    'George H. W. Bush': (6, 5),   # Right-leaning authoritarian
+    'George W. Bush': (6, 5),      # Right-leaning authoritarian
+    'Donald Trump': (8, 7),        # Strongly right-leaning, authoritarian
+    'John Adams': (3, 5),          # Moderate right, authoritarian (Federalist policies)
+    'John Quincy Adams': (2, 2),   # Moderate right, slightly authoritarian
+    'William Harrison': (5, 3),    # Right-leaning authoritarian
+    'John Tyler': (6, 4),          # Right-leaning authoritarian
+    'Zachary Taylor': (5, 4),      # Right-leaning authoritarian
+    'Millard Fillmore': (4, 3),    # Right-leaning authoritarian
+    'Warren G. Harding': (7, 6)    # Right-leaning authoritarian
 }
 
 def assign_leaning(president):

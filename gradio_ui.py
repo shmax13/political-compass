@@ -4,6 +4,7 @@ import itertools
 from collections import Counter
 import numpy as np
 import gradio as gr
+import matplotlib.pyplot as plt
 
 # Caching for models and vectorizers to avoid reloading them every time
 model_cache = {}
@@ -89,7 +90,72 @@ def make_prediction(input_text):
     final_x_prediction = np.mean(all_regression_predictions['x']) if all_regression_predictions['x'] else None
     final_y_prediction = np.mean(all_regression_predictions['y']) if all_regression_predictions['y'] else None
 
-    return final_classification_prediction, (final_x_prediction, final_y_prediction)
+    # Format the regression predictions to 4 decimals 
+    final_x_prediction = f"{final_x_prediction:.3f}" if final_x_prediction is not None else None
+    final_y_prediction = f"{final_y_prediction:.3f}" if final_y_prediction is not None else None
+
+    # Plot the coordinates and save the plot image
+    plot_image_path = plot_coordinates(final_x_prediction, final_y_prediction)
+
+    return final_classification_prediction, (final_x_prediction, final_y_prediction), plot_image_path
+
+
+def plot_coordinates(x,y): 
+    """plot the x and y coordinates as point in "D coordinate space - compass"""
+
+      # Convert x and y to float for plotting
+    x = float(x)
+    y = float(y)
+
+    # Create plot
+    plt.figure(figsize=(6,6))
+    
+
+    # Add political compass labels on axes
+    plt.text(1.02, 0.5, 'Right', transform=plt.gca().transAxes, ha='center', fontsize=12)
+    plt.text(-0.08, 0.5, 'Left', transform=plt.gca().transAxes, ha='center', fontsize=12)
+    plt.text(0.5, 1.02, 'Authoritarian', transform=plt.gca().transAxes, va='center', fontsize=12)
+    plt.text(0.5, -0.08, 'Libertarian', transform=plt.gca().transAxes, va='center', fontsize=12)
+
+    # Set axis limits to zoom in on the scale
+    plt.xlim(-10.5, 10.5)
+    plt.ylim(-10.5, 10.5)
+    plt.axis('equal')
+
+    # plt.title('Political compass plot')
+    plt.grid(True)
+
+    # Add colors to quadrants 
+    colors = ['red', 'blue', 'green', 'purple']
+
+    # Define the limits of the plot
+    x_min, x_max = -10.5, 10.5
+    y_min, y_max = -10.5, 10.5
+
+    # Calculate the quadrant boundaries
+    x1, x2 = (x_min, x_max)
+    y1, y2 = (y_min, y_max)
+
+    # Plot the lines and fill the quadrants
+    plt.plot([0, 0], [y1, y2], color='black', linewidth=1)
+    plt.plot([x1, x2], [0, 0], color='black', linewidth=1)
+
+    # Fill the quadrants
+    plt.fill_between([x_min, 0], [y_max, y_max], color=colors[0])  # top left (red)
+    plt.fill_between([0, x_max], [y_max, y_max], color=colors[1])  # top right (blue)
+    plt.fill_between([x_min, 0], [y_min, y_min], color=colors[2])  # bottom left (green)
+    plt.fill_between([0, x_max], [y_min, y_min], color=colors[3])  # bottom right (purple)
+
+    #plot point
+    plt.scatter(x,y, color='white', marker='x', linewidths=2)
+    plt.text(x + 0.15, y + 0.15, f'({x}, {y})', fontsize=10, ha='left', color='white') #+ offset to prevent label overlap 
+    
+    #save plot as png - to show in ui 
+    plt_image_path = 'compass_plot.png'
+    plt.savefig(plt_image_path)
+
+    return plt_image_path
+
 
 def main():
     # Create a Gradio interface
@@ -98,7 +164,8 @@ def main():
         inputs=gr.Textbox(label="Input Text"), 
         outputs=[
             gr.Label(label="Classification Prediction"), 
-            gr.Textbox(label="Regression Coordinates (x, y)")
+            gr.Textbox(label="Regression Coordinates (x, y)"),
+            gr.Image(label="Political Compass Plot")
         ],
         title="Political Speech Classifier and Regression",
         description="Enter text to classify using various classifiers and predict political coordinates."
