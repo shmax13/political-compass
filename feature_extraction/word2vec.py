@@ -25,6 +25,7 @@ class Word2VecExtractor(BaseFeatureExtractor):
         """Extract Word2Vec features."""
         X_word2vec = np.array([self.vectorize_speech(speech) for speech in cleaned_speeches])
 
+        # Apply PCA to reduce dimensionality
         pca = PCA(n_components=200)
         X_word2vec = pca.fit_transform(X_word2vec)
 
