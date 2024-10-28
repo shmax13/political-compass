@@ -7,6 +7,7 @@ from feature_extraction.tfidf import TfidfExtractor
 from feature_extraction.bow import BagOfWordsExtractor
 from feature_extraction.word2vec import Word2VecExtractor
 from feature_extraction.ngrams import NgramsExtractor
+from feature_extraction.bert import BERTExtractor
 from sklearn.svm import SVC, SVR
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression, LinearRegression
@@ -106,10 +107,11 @@ def main():
 
     # Create instances of feature extractors
     feature_extractors = [
-        TfidfExtractor(),
-        BagOfWordsExtractor(),
-        Word2VecExtractor(),
-        NgramsExtractor(),
+        # TfidfExtractor(),
+        # BagOfWordsExtractor(),
+        # Word2VecExtractor(),
+        # NgramsExtractor(),
+        BERTExtractor(),
     ]
 
     # Loop through each feature extraction method

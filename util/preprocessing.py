@@ -3,6 +3,7 @@ import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+import spacy
 
 # Download NLTK resources
 import nltk
@@ -13,6 +14,9 @@ nltk.download('wordnet')
 # Initialize stopwords and lemmatizer
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
+
+# Load spacy NER model for entity recognition
+nlp = spacy.load('en_core_web_sm')
 
 president_positions = {
     'Andrew Jackson': (6, 6),      # Right-leaning authoritarian, despite some populist rhetoric
@@ -89,6 +93,11 @@ def preprocess_text(text):
     # Join tokens back into a string
     return ' '.join(cleaned_tokens)
 
+def extract_NE (text): 
+    doc=nlp(text)
+    enteties=[(ent.text, ent.label_) for ent in doc.ents]
+    return enteties
+
 def preprocess():
 
     with open('./speeches/speeches.json', 'r') as file:
@@ -98,6 +107,7 @@ def preprocess():
     speeches = []
     labels = []
     coordinates = []
+    entities_list = []
 
     for entry in data:
         speech_text = entry['transcript']
@@ -107,6 +117,10 @@ def preprocess():
         position = assign_coordinates(president)
         coordinates.append(position)
         speeches.append(speech_text)
+
+        # Extract named entities
+        entities = extract_NE(speech_text)
+        entities_list.append(entities)
     
     # preprocess speech text
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
