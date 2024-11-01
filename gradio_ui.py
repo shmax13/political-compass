@@ -40,8 +40,17 @@ def predict_regression(regressor, vectorizer, input_text):
     prediction = regressor.predict(features)
     return prediction[0]
 
+x_avg, y_avg = 1.5, -2.0  # Example values for illustration; adjust based on actual measurements
+
 def make_prediction(input_text):
-    """Make predictions for classification and regression based on user input."""
+    """Make predictions for classification and regression with calibration."""
+    if not input_text.strip():  # Handle empty input with calibrated origin (0, 0)
+        final_classification_prediction = "No Prediction"
+        final_x_prediction, final_y_prediction = 0.0, 0.0
+        plot_image_path = plot_coordinates(final_x_prediction, final_y_prediction)
+        return final_classification_prediction, (final_x_prediction, final_y_prediction), plot_image_path
+
+    # Proceed with classification and regression predictions
     classifiers = ['Logistic_Regression', 'Random_Forest_Classifier', 'Support_Vector_Classifier']
     regressors = ['Linear_Regression_(x)', 'Linear_Regression_(y)', 
                   'Random_Forest_Regressor_(x)', 'Random_Forest_Regressor_(y)',
@@ -87,14 +96,18 @@ def make_prediction(input_text):
     final_classification_prediction = Counter(all_predictions).most_common(1)[0][0] if all_predictions else "No Prediction"
 
     # Calculate the average of the x and y regression predictions
-    final_x_prediction = np.mean(all_regression_predictions['x']) if all_regression_predictions['x'] else None
-    final_y_prediction = np.mean(all_regression_predictions['y']) if all_regression_predictions['y'] else None
+    final_x_prediction = np.mean(all_regression_predictions['x']) if all_regression_predictions['x'] else x_avg
+    final_y_prediction = np.mean(all_regression_predictions['y']) if all_regression_predictions['y'] else y_avg
 
-    # Format the regression predictions to 4 decimals 
-    final_x_prediction = f"{final_x_prediction:.3f}" if final_x_prediction is not None else None
-    final_y_prediction = f"{final_y_prediction:.3f}" if final_y_prediction is not None else None
+    # Apply calibration offset to center on (0,0)
+    calibrated_x = final_x_prediction - x_avg
+    calibrated_y = final_y_prediction - y_avg
 
-    # Plot the coordinates and save the plot image
+    # Format the regression predictions to 3 decimals
+    final_x_prediction = f"{calibrated_x:.3f}"
+    final_y_prediction = f"{calibrated_y:.3f}"
+
+    # Plot the calibrated coordinates and save the plot image
     plot_image_path = plot_coordinates(final_x_prediction, final_y_prediction)
 
     return final_classification_prediction, (final_x_prediction, final_y_prediction), plot_image_path

@@ -24,9 +24,10 @@ class BERTExtractor(BaseFeatureExtractor):
             # max_embedding = outputs.last_hidden_state.max(dim=1).values.squeeze().numpy()
             # return max_embedding 
 
-            #mean pooling
+            # #mean pooling - beats cls or max embedding in terms of accuracy
             mean_embedding = outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
             return mean_embedding
+
 
     def extract(self, cleaned_speeches, labels):
         """Extract BERT features."""

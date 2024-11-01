@@ -75,7 +75,20 @@ def assign_leaning(president):
         return 'Unknown'
     
 def assign_coordinates(president):
+    global president_positions  # Allows modification of the original dictionary
+
+    # Calculate mean of x and y coordinates
+    x_mean = sum(pos[0] for pos in president_positions.values()) / len(president_positions)
+    y_mean = sum(pos[1] for pos in president_positions.values()) / len(president_positions)
+
+    # Adjust coordinates to center around the origin
+    president_positions = {president: (pos[0] - x_mean, pos[1] - y_mean) for president, pos in president_positions.items()}
+
+    # Return the centered coordinates for the specified president
     return president_positions.get(president, (0, 0))  # Default to (0, 0) if unknown
+
+
+
 
 def preprocess_text(text):
     # Convert to lowercase
