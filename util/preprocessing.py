@@ -87,9 +87,6 @@ def assign_coordinates(president):
     # Return the centered coordinates for the specified president
     return president_positions.get(president, (0, 0))  # Default to (0, 0) if unknown
 
-
-
-
 def preprocess_text(text):
     # Convert to lowercase
     text = text.lower()
