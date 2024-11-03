@@ -18,6 +18,7 @@ lemmatizer = WordNetLemmatizer()
 # Load spacy NER model for entity recognition
 nlp = spacy.load('en_core_web_sm')
 
+# NOTE: the following approximated positions were assigned by us, and are not the result of scientific study
 president_positions = {
     'Andrew Jackson': (6, 6),      # Right-leaning authoritarian, despite some populist rhetoric
     'Martin Van Buren': (-5, -3),  # Moderate left libertarian
@@ -82,6 +83,7 @@ def assign_coordinates(president):
     y_mean = sum(pos[1] for pos in president_positions.values()) / len(president_positions)
 
     # Adjust coordinates to center around the origin
+    # NOTE: this affects the president's positions, and should only be used for demo purposes
     president_positions = {president: (pos[0] - x_mean, pos[1] - y_mean) for president, pos in president_positions.items()}
 
     # Return the centered coordinates for the specified president
@@ -117,7 +119,8 @@ def preprocess():
     speeches = []
     labels = []
     coordinates = []
-    entities_list = []
+    # TODO: deal with NE recognition (takes a rly long time at the moment)
+    #entities_list = []
 
     for entry in data:
         speech_text = entry['transcript']
@@ -129,8 +132,8 @@ def preprocess():
         speeches.append(speech_text)
 
         # Extract named entities
-        entities = extract_NE(speech_text)
-        entities_list.append(entities)
+        #entities = extract_NE(speech_text)
+        #entities_list.append(entities)
     
     # preprocess speech text
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
