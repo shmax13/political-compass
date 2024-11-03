@@ -5,6 +5,7 @@ from collections import Counter
 import numpy as np
 import gradio as gr
 import matplotlib.pyplot as plt
+from util.preprocessing import preprocess_text
 
 # Caching for models and vectorizers to avoid reloading them every time
 model_cache = {}
@@ -40,8 +41,6 @@ def predict_regression(regressor, vectorizer, input_text):
     prediction = regressor.predict(features)
     return prediction[0]
 
-x_avg, y_avg = 1.5, -2.0  # Example values for illustration; adjust based on actual measurements
-
 def make_prediction(input_text):
     """Make predictions for classification and regression with calibration."""
     if not input_text.strip():  # Handle empty input with calibrated origin (0, 0)
@@ -56,10 +55,12 @@ def make_prediction(input_text):
                   'Random_Forest_Regressor_(x)', 'Random_Forest_Regressor_(y)',
                   'Support_Vector_Regressor_(x)', 'Support_Vector_Regressor_(y)']
     vectorizers = ['TfidfExtractor', 'BagOfWordsExtractor', 'NgramsExtractor']
+    # TODO what about BERT & word2vec?
 
     all_predictions = []
     all_regression_predictions = {'x': [], 'y': []}
 
+    processed_text = preprocess_text(input_text)
     # Classify the input text
     for extractor_name, classifier_name in itertools.product(vectorizers, classifiers):
         model_path = f'classifiers/{extractor_name}_{classifier_name}.pkl'
@@ -71,7 +72,7 @@ def make_prediction(input_text):
         model = load_model(model_path)
         vectorizer = load_vectorizer(vectorizer_path)
 
-        prediction = classify_input(model, vectorizer, input_text)
+        prediction = classify_input(model, vectorizer, processed_text)
         all_predictions.append(prediction)
 
     # Predict the x and y coordinates for regression
@@ -86,7 +87,7 @@ def make_prediction(input_text):
         vectorizer = load_vectorizer(vectorizer_path)
 
         # Predict either the x or y coordinate
-        prediction = predict_regression(regressor, vectorizer, input_text)
+        prediction = predict_regression(regressor, vectorizer, processed_text)
         if 'x' in regressor_name:
             all_regression_predictions['x'].append(prediction)
         else:
@@ -96,16 +97,12 @@ def make_prediction(input_text):
     final_classification_prediction = Counter(all_predictions).most_common(1)[0][0] if all_predictions else "No Prediction"
 
     # Calculate the average of the x and y regression predictions
-    final_x_prediction = np.mean(all_regression_predictions['x']) if all_regression_predictions['x'] else x_avg
-    final_y_prediction = np.mean(all_regression_predictions['y']) if all_regression_predictions['y'] else y_avg
-
-    # Apply calibration offset to center on (0,0)
-    calibrated_x = final_x_prediction - x_avg
-    calibrated_y = final_y_prediction - y_avg
+    final_x_prediction = np.median(all_regression_predictions['x']) if all_regression_predictions['x'] else 0.0
+    final_y_prediction = np.median(all_regression_predictions['y']) if all_regression_predictions['y'] else 0.0
 
     # Format the regression predictions to 3 decimals
-    final_x_prediction = f"{calibrated_x:.3f}"
-    final_y_prediction = f"{calibrated_y:.3f}"
+    final_x_prediction = f"{final_x_prediction:.3f}"
+    final_y_prediction = f"{final_y_prediction:.3f}"
 
     # Plot the calibrated coordinates and save the plot image
     plot_image_path = plot_coordinates(final_x_prediction, final_y_prediction)
