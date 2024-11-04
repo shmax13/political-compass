@@ -109,8 +109,8 @@ def main():
     feature_extractors = [
         TfidfExtractor(),
         BagOfWordsExtractor(),
-        NgramsExtractor(),
         Word2VecExtractor(),
+        NgramsExtractor(),
         BERTExtractor(),
     ]
 
