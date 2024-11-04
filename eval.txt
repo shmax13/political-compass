@@ -1,165 +1,374 @@
 Speeches and labels loaded successfully.
 
-Evaluating TF-IDF...
+Evaluating TfidfExtractor...
+Saved vectorizer to vectorizers/TfidfExtractor_vectorizer.pkl
 Training Logistic Regression...
-Accuracy (TF-IDF) with Logistic Regression: 79.25%
+Accuracy with Logistic Regression: 81.60%
 Classification Report:
                precision    recall  f1-score   support
 
- Left-Leaning       0.78      0.88      0.83       118
-Right-Leaning       0.81      0.70      0.75        91
+ Left-Leaning       0.82      0.84      0.83       112
+Right-Leaning       0.81      0.81      0.81        97
       Unknown       0.00      0.00      0.00         3
 
-     accuracy                           0.79       212
-    macro avg       0.53      0.53      0.53       212
- weighted avg       0.78      0.79      0.78       212
+     accuracy                           0.82       212
+    macro avg       0.54      0.55      0.55       212
+ weighted avg       0.80      0.82      0.81       212
 
+Saved Logistic Regression classifier to classifiers/TfidfExtractor_Logistic_Regression.pkl
 Training Support Vector Classifier...
-Accuracy (TF-IDF) with Support Vector Classifier: 79.25%
+Accuracy with Support Vector Classifier: 83.49%
 Classification Report:
                precision    recall  f1-score   support
 
- Left-Leaning       0.76      0.91      0.83       118
-Right-Leaning       0.85      0.67      0.75        91
+ Left-Leaning       0.83      0.88      0.85       112
+Right-Leaning       0.84      0.81      0.83        97
       Unknown       0.00      0.00      0.00         3
 
-     accuracy                           0.79       212
-    macro avg       0.54      0.53      0.53       212
- weighted avg       0.79      0.79      0.78       212
+     accuracy                           0.83       212
+    macro avg       0.56      0.56      0.56       212
+ weighted avg       0.82      0.83      0.83       212
 
+Saved Support Vector Classifier classifier to classifiers/TfidfExtractor_Support_Vector_Classifier.pkl
 Training Random Forest Classifier...
-Accuracy (TF-IDF) with Random Forest Classifier: 75.00%
+Accuracy with Random Forest Classifier: 73.58%
 Classification Report:
                precision    recall  f1-score   support
 
- Left-Leaning       0.73      0.90      0.80       118
-Right-Leaning       0.80      0.58      0.68        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.75       212
-    macro avg       0.51      0.49      0.49       212
- weighted avg       0.75      0.75      0.74       212
-
-
-Evaluating Bag of Words (BoW)...
-Training Logistic Regression...
-Accuracy (Bag of Words (BoW)) with Logistic Regression: 79.25%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.82      0.83      0.82       118
-Right-Leaning       0.77      0.77      0.77        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.79       212
-    macro avg       0.53      0.53      0.53       212
- weighted avg       0.78      0.79      0.79       212
-
-Training Support Vector Classifier...
-Accuracy (Bag of Words (BoW)) with Support Vector Classifier: 73.11%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.68      0.97      0.80       118
-Right-Leaning       0.93      0.44      0.60        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.73       212
-    macro avg       0.54      0.47      0.47       212
- weighted avg       0.78      0.73      0.70       212
-
-Training Random Forest Classifier...
-Accuracy (Bag of Words (BoW)) with Random Forest Classifier: 75.47%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.74      0.86      0.80       118
-Right-Leaning       0.77      0.64      0.70        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.75       212
-    macro avg       0.51      0.50      0.50       212
- weighted avg       0.75      0.75      0.75       212
-
-
-Evaluating Word2Vec...
-Training Logistic Regression...
-Accuracy (Word2Vec) with Logistic Regression: 62.74%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.62      0.86      0.72       118
-Right-Leaning       0.65      0.34      0.45        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.63       212
-    macro avg       0.42      0.40      0.39       212
- weighted avg       0.62      0.63      0.59       212
-
-Training Support Vector Classifier...
-Accuracy (Word2Vec) with Support Vector Classifier: 65.57%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.64      0.92      0.75       118
-Right-Leaning       0.74      0.34      0.47        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.66       212
-    macro avg       0.46      0.42      0.41       212
- weighted avg       0.67      0.66      0.62       212
-
-Training Random Forest Classifier...
-Accuracy (Word2Vec) with Random Forest Classifier: 71.23%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.71      0.83      0.77       118
-Right-Leaning       0.72      0.58      0.64        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.71       212
-    macro avg       0.48      0.47      0.47       212
- weighted avg       0.70      0.71      0.70       212
-
-
-Evaluating N-grams (Bigrams)...
-Training Logistic Regression...
-Accuracy (N-grams (Bigrams)) with Logistic Regression: 76.42%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.79      0.81      0.80       118
-Right-Leaning       0.76      0.73      0.74        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.76       212
-    macro avg       0.52      0.51      0.51       212
- weighted avg       0.76      0.76      0.76       212
-
-Training Support Vector Classifier...
-Accuracy (N-grams (Bigrams)) with Support Vector Classifier: 71.23%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.66      0.98      0.79       118
-Right-Leaning       0.95      0.38      0.55        91
-      Unknown       0.00      0.00      0.00         3
-
-     accuracy                           0.71       212
-    macro avg       0.54      0.46      0.45       212
- weighted avg       0.77      0.71      0.68       212
-
-Training Random Forest Classifier...
-Accuracy (N-grams (Bigrams)) with Random Forest Classifier: 73.58%
-Classification Report:
-               precision    recall  f1-score   support
-
- Left-Leaning       0.74      0.83      0.78       118
-Right-Leaning       0.73      0.64      0.68        91
+ Left-Leaning       0.72      0.83      0.77       112
+Right-Leaning       0.76      0.65      0.70        97
       Unknown       0.00      0.00      0.00         3
 
      accuracy                           0.74       212
     macro avg       0.49      0.49      0.49       212
  weighted avg       0.73      0.74      0.73       212
 
+Saved Random Forest Classifier classifier to classifiers/TfidfExtractor_Random_Forest_Classifier.pkl
+Training Linear Regression (x)...
+MSE with Linear Regression (x): 16.0166
+R² with Linear Regression (x): 0.5210
+MAE with Linear Regression (x): 3.2361
+Saved Linear Regression (x) regressor to regressors/TfidfExtractor_Linear_Regression_(x).pkl
+Training Linear Regression (y)...
+MSE with Linear Regression (y): 8.2191
+R² with Linear Regression (y): 0.5312
+MAE with Linear Regression (y): 2.2332
+Saved Linear Regression (y) regressor to regressors/TfidfExtractor_Linear_Regression_(y).pkl
+Training Random Forest Regressor (x)...
+MSE with Random Forest Regressor (x): 23.0650
+R² with Random Forest Regressor (x): 0.3102
+MAE with Random Forest Regressor (x): 4.4071
+Saved Random Forest Regressor (x) regressor to regressors/TfidfExtractor_Random_Forest_Regressor_(x).pkl
+Training Random Forest Regressor (y)...
+MSE with Random Forest Regressor (y): 11.7332
+R² with Random Forest Regressor (y): 0.3307
+MAE with Random Forest Regressor (y): 2.7191
+Saved Random Forest Regressor (y) regressor to regressors/TfidfExtractor_Random_Forest_Regressor_(y).pkl
+Training Support Vector Regressor (x)...
+MSE with Support Vector Regressor (x): 27.2576
+R² with Support Vector Regressor (x): 0.1848
+MAE with Support Vector Regressor (x): 4.5021
+Saved Support Vector Regressor (x) regressor to regressors/TfidfExtractor_Support_Vector_Regressor_(x).pkl
+Training Support Vector Regressor (y)...
+MSE with Support Vector Regressor (y): 15.2246
+R² with Support Vector Regressor (y): 0.1316
+MAE with Support Vector Regressor (y): 2.7513
+Saved Support Vector Regressor (y) regressor to regressors/TfidfExtractor_Support_Vector_Regressor_(y).pkl
+
+Evaluating BagOfWordsExtractor...
+Saved vectorizer to vectorizers/BagOfWordsExtractor_vectorizer.pkl
+Training Logistic Regression...
+Accuracy with Logistic Regression: 79.25%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.82      0.80      0.81       112
+Right-Leaning       0.77      0.80      0.79        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.79       212
+    macro avg       0.53      0.54      0.53       212
+ weighted avg       0.79      0.79      0.79       212
+
+Saved Logistic Regression classifier to classifiers/BagOfWordsExtractor_Logistic_Regression.pkl
+Training Support Vector Classifier...
+Accuracy with Support Vector Classifier: 79.25%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.75      0.93      0.83       112
+Right-Leaning       0.88      0.66      0.75        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.79       212
+    macro avg       0.54      0.53      0.53       212
+ weighted avg       0.80      0.79      0.78       212
+
+Saved Support Vector Classifier classifier to classifiers/BagOfWordsExtractor_Support_Vector_Classifier.pkl
+Training Random Forest Classifier...
+Accuracy with Random Forest Classifier: 77.36%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.77      0.84      0.80       112
+Right-Leaning       0.78      0.72      0.75        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.77       212
+    macro avg       0.52      0.52      0.52       212
+ weighted avg       0.76      0.77      0.77       212
+
+Saved Random Forest Classifier classifier to classifiers/BagOfWordsExtractor_Random_Forest_Classifier.pkl
+Training Linear Regression (x)...
+MSE with Linear Regression (x): 94.3552
+R² with Linear Regression (x): -1.8219
+MAE with Linear Regression (x): 6.7559
+Saved Linear Regression (x) regressor to regressors/BagOfWordsExtractor_Linear_Regression_(x).pkl
+Training Linear Regression (y)...
+MSE with Linear Regression (y): 39.5699
+R² with Linear Regression (y): -1.2571
+MAE with Linear Regression (y): 4.4940
+Saved Linear Regression (y) regressor to regressors/BagOfWordsExtractor_Linear_Regression_(y).pkl
+Training Random Forest Regressor (x)...
+MSE with Random Forest Regressor (x): 22.8809
+R² with Random Forest Regressor (x): 0.3157
+MAE with Random Forest Regressor (x): 4.4086
+Saved Random Forest Regressor (x) regressor to regressors/BagOfWordsExtractor_Random_Forest_Regressor_(x).pkl
+Training Random Forest Regressor (y)...
+MSE with Random Forest Regressor (y): 12.0980
+R² with Random Forest Regressor (y): 0.3099
+MAE with Random Forest Regressor (y): 2.7532
+Saved Random Forest Regressor (y) regressor to regressors/BagOfWordsExtractor_Random_Forest_Regressor_(y).pkl
+Training Support Vector Regressor (x)...
+MSE with Support Vector Regressor (x): 27.9227
+R² with Support Vector Regressor (x): 0.1649
+MAE with Support Vector Regressor (x): 4.5480
+Saved Support Vector Regressor (x) regressor to regressors/BagOfWordsExtractor_Support_Vector_Regressor_(x).pkl
+Training Support Vector Regressor (y)...
+MSE with Support Vector Regressor (y): 16.6835
+R² with Support Vector Regressor (y): 0.0484
+MAE with Support Vector Regressor (y): 2.8944
+Saved Support Vector Regressor (y) regressor to regressors/BagOfWordsExtractor_Support_Vector_Regressor_(y).pkl
+
+Evaluating NgramsExtractor...
+Saved vectorizer to vectorizers/NgramsExtractor_vectorizer.pkl
+Training Logistic Regression...
+Accuracy with Logistic Regression: 74.06%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.77      0.76      0.77       112
+Right-Leaning       0.72      0.74      0.73        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.74       212
+    macro avg       0.50      0.50      0.50       212
+ weighted avg       0.74      0.74      0.74       212
+
+Saved Logistic Regression classifier to classifiers/NgramsExtractor_Logistic_Regression.pkl
+Training Support Vector Classifier...
+Accuracy with Support Vector Classifier: 71.23%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.66      0.95      0.78       112
+Right-Leaning       0.88      0.46      0.61        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.71       212
+    macro avg       0.51      0.47      0.46       212
+ weighted avg       0.75      0.71      0.69       212
+
+Saved Support Vector Classifier classifier to classifiers/NgramsExtractor_Support_Vector_Classifier.pkl
+Training Random Forest Classifier...
+Accuracy with Random Forest Classifier: 74.53%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.78      0.73      0.76       112
+Right-Leaning       0.71      0.78      0.75        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.75       212
+    macro avg       0.50      0.51      0.50       212
+ weighted avg       0.74      0.75      0.74       212
+
+Saved Random Forest Classifier classifier to classifiers/NgramsExtractor_Random_Forest_Classifier.pkl
+Training Linear Regression (x)...
+MSE with Linear Regression (x): 69.3177
+R² with Linear Regression (x): -1.0731
+MAE with Linear Regression (x): 6.3222
+Saved Linear Regression (x) regressor to regressors/NgramsExtractor_Linear_Regression_(x).pkl
+Training Linear Regression (y)...
+MSE with Linear Regression (y): 32.3983
+R² with Linear Regression (y): -0.8480
+MAE with Linear Regression (y): 4.1007
+Saved Linear Regression (y) regressor to regressors/NgramsExtractor_Linear_Regression_(y).pkl
+Training Random Forest Regressor (x)...
+MSE with Random Forest Regressor (x): 22.8085
+R² with Random Forest Regressor (x): 0.3179
+MAE with Random Forest Regressor (x): 4.3616
+Saved Random Forest Regressor (x) regressor to regressors/NgramsExtractor_Random_Forest_Regressor_(x).pkl
+Training Random Forest Regressor (y)...
+MSE with Random Forest Regressor (y): 14.5099
+R² with Random Forest Regressor (y): 0.1724
+MAE with Random Forest Regressor (y): 3.0066
+Saved Random Forest Regressor (y) regressor to regressors/NgramsExtractor_Random_Forest_Regressor_(y).pkl
+Training Support Vector Regressor (x)...
+MSE with Support Vector Regressor (x): 32.8467
+R² with Support Vector Regressor (x): 0.0177
+MAE with Support Vector Regressor (x): 4.8102
+Saved Support Vector Regressor (x) regressor to regressors/NgramsExtractor_Support_Vector_Regressor_(x).pkl
+Training Support Vector Regressor (y)...
+MSE with Support Vector Regressor (y): 17.5280
+R² with Support Vector Regressor (y): 0.0002
+MAE with Support Vector Regressor (y): 2.9952
+Saved Support Vector Regressor (y) regressor to regressors/NgramsExtractor_Support_Vector_Regressor_(y).pkl
+
+Evaluating Word2VecExtractor...
+Training Logistic Regression...
+Accuracy with Logistic Regression: 66.98%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.67      0.75      0.71       112
+Right-Leaning       0.67      0.60      0.63        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.67       212
+    macro avg       0.45      0.45      0.45       212
+ weighted avg       0.66      0.67      0.66       212
+
+Saved Logistic Regression classifier to classifiers/Word2VecExtractor_Logistic_Regression.pkl
+Training Support Vector Classifier...
+Accuracy with Support Vector Classifier: 74.53%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.76      0.78      0.77       112
+Right-Leaning       0.73      0.73      0.73        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.75       212
+    macro avg       0.50      0.50      0.50       212
+ weighted avg       0.73      0.75      0.74       212
+
+Saved Support Vector Classifier classifier to classifiers/Word2VecExtractor_Support_Vector_Classifier.pkl
+Training Random Forest Classifier...
+Accuracy with Random Forest Classifier: 68.40%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.68      0.79      0.73       112
+Right-Leaning       0.69      0.58      0.63        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.68       212
+    macro avg       0.46      0.46      0.45       212
+ weighted avg       0.68      0.68      0.67       212
+
+Saved Random Forest Classifier classifier to classifiers/Word2VecExtractor_Random_Forest_Classifier.pkl
+Training Linear Regression (x)...
+MSE with Linear Regression (x): 25.4789
+R² with Linear Regression (x): 0.2380
+MAE with Linear Regression (x): 4.0826
+Saved Linear Regression (x) regressor to regressors/Word2VecExtractor_Linear_Regression_(x).pkl
+Training Linear Regression (y)...
+MSE with Linear Regression (y): 14.6757
+R² with Linear Regression (y): 0.1629
+MAE with Linear Regression (y): 3.0453
+Saved Linear Regression (y) regressor to regressors/Word2VecExtractor_Linear_Regression_(y).pkl
+Training Random Forest Regressor (x)...
+MSE with Random Forest Regressor (x): 26.6414
+R² with Random Forest Regressor (x): 0.2032
+MAE with Random Forest Regressor (x): 4.8197
+Saved Random Forest Regressor (x) regressor to regressors/Word2VecExtractor_Random_Forest_Regressor_(x).pkl
+Training Random Forest Regressor (y)...
+MSE with Random Forest Regressor (y): 13.7597
+R² with Random Forest Regressor (y): 0.2151
+MAE with Random Forest Regressor (y): 3.0134
+Saved Random Forest Regressor (y) regressor to regressors/Word2VecExtractor_Random_Forest_Regressor_(y).pkl
+Training Support Vector Regressor (x)...
+MSE with Support Vector Regressor (x): 26.0784
+R² with Support Vector Regressor (x): 0.2201
+MAE with Support Vector Regressor (x): 4.2557
+Saved Support Vector Regressor (x) regressor to regressors/Word2VecExtractor_Support_Vector_Regressor_(x).pkl
+Training Support Vector Regressor (y)...
+MSE with Support Vector Regressor (y): 15.4674
+R² with Support Vector Regressor (y): 0.1177
+MAE with Support Vector Regressor (y): 2.7775
+Saved Support Vector Regressor (y) regressor to regressors/Word2VecExtractor_Support_Vector_Regressor_(y).pkl
+
+Evaluating BERTExtractor...
+Training Logistic Regression...
+Accuracy with Logistic Regression: 64.62%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.67      0.70      0.68       112
+Right-Leaning       0.62      0.61      0.61        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.65       212
+    macro avg       0.43      0.43      0.43       212
+ weighted avg       0.64      0.65      0.64       212
+
+Saved Logistic Regression classifier to classifiers/BERTExtractor_Logistic_Regression.pkl
+Training Support Vector Classifier...
+Accuracy with Support Vector Classifier: 64.62%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.63      0.85      0.72       112
+Right-Leaning       0.69      0.43      0.53        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.65       212
+    macro avg       0.44      0.43      0.42       212
+ weighted avg       0.65      0.65      0.62       212
+
+Saved Support Vector Classifier classifier to classifiers/BERTExtractor_Support_Vector_Classifier.pkl
+Training Random Forest Classifier...
+Accuracy with Random Forest Classifier: 67.45%
+Classification Report:
+               precision    recall  f1-score   support
+
+ Left-Leaning       0.68      0.75      0.71       112
+Right-Leaning       0.66      0.61      0.63        97
+      Unknown       0.00      0.00      0.00         3
+
+     accuracy                           0.67       212
+    macro avg       0.45      0.45      0.45       212
+ weighted avg       0.66      0.67      0.67       212
+
+Saved Random Forest Classifier classifier to classifiers/BERTExtractor_Random_Forest_Classifier.pkl
+Training Linear Regression (x)...
+MSE with Linear Regression (x): 248.2698
+R² with Linear Regression (x): -6.4249
+MAE with Linear Regression (x): 11.3045
+Saved Linear Regression (x) regressor to regressors/BERTExtractor_Linear_Regression_(x).pkl
+Training Linear Regression (y)...
+MSE with Linear Regression (y): 127.0523
+R² with Linear Regression (y): -6.2471
+MAE with Linear Regression (y): 8.7187
+Saved Linear Regression (y) regressor to regressors/BERTExtractor_Linear_Regression_(y).pkl
+Training Random Forest Regressor (x)...
+MSE with Random Forest Regressor (x): 27.5066
+R² with Random Forest Regressor (x): 0.1774
+MAE with Random Forest Regressor (x): 4.8830
+Saved Random Forest Regressor (x) regressor to regressors/BERTExtractor_Random_Forest_Regressor_(x).pkl
+Training Random Forest Regressor (y)...
+MSE with Random Forest Regressor (y): 14.4815
+R² with Random Forest Regressor (y): 0.1740
+MAE with Random Forest Regressor (y): 3.0599
+Saved Random Forest Regressor (y) regressor to regressors/BERTExtractor_Random_Forest_Regressor_(y).pkl
+Training Support Vector Regressor (x)...
+MSE with Support Vector Regressor (x): 33.9059
+R² with Support Vector Regressor (x): -0.0140
+MAE with Support Vector Regressor (x): 4.9798
+Saved Support Vector Regressor (x) regressor to regressors/BERTExtractor_Support_Vector_Regressor_(x).pkl
+Training Support Vector Regressor (y)...
+MSE with Support Vector Regressor (y): 18.3548
+R² with Support Vector Regressor (y): -0.0470
+MAE with Support Vector Regressor (y): 3.0274
+Saved Support Vector Regressor (y) regressor to regressors/BERTExtractor_Support_Vector_Regressor_(y).pkl
