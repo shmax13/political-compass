@@ -1,7 +1,9 @@
 import json
 import joblib
 import os
+from matplotlib import pyplot as plt
 import numpy as np
+import shap
 from sklearn.metrics import accuracy_score, classification_report, mean_squared_error, mean_absolute_error, r2_score
 from feature_extraction.tfidf import TfidfExtractor
 from feature_extraction.bow import BagOfWordsExtractor
@@ -19,7 +21,7 @@ def load_preprocessed_data(filename='./speeches/preprocessed_speeches.json'):
     print('Speeches and labels loaded successfully.')
     return data['speeches'], data['labels'], data['coordinates']
 
-def train_and_evaluate_classifiers(X_train, X_test, y_train, y_test, extractor_name):
+def train_and_evaluate_classifiers(X_train, X_test, y_train, y_test, extractor_name, vectorizer):
     """Train and evaluate classifiers on the extracted features."""
     classifiers = {
         'Logistic Regression': LogisticRegression(max_iter=1000),
@@ -36,6 +38,14 @@ def train_and_evaluate_classifiers(X_train, X_test, y_train, y_test, extractor_n
         print(f"Accuracy with {name}: {accuracy * 100:.2f}%")
         print("Classification Report:")
         print(report)
+
+        if extractor_name == "TfidfExtractor" and name == "Logistic Regression":
+            
+            explainer = shap.Explainer(classifier, X_train, feature_names=vectorizer.get_feature_names_out())
+            shap_values = explainer(X_test)
+            shap.plots.beeswarm(shap_values, max_display=100, show=False)
+            plt.savefig("shap_beeswarm_plot.png", format="png", dpi=300, bbox_inches="tight")
+            plt.close()
 
         # Save the classifier
         classifier_filename = f"classifiers/{extractor_name}_{name.replace(' ', '_')}.pkl"
@@ -108,10 +118,10 @@ def main():
     # Create instances of feature extractors
     feature_extractors = [
         TfidfExtractor(),
-        # BagOfWordsExtractor(),
-        # Word2VecExtractor(),
-        # NgramsExtractor(),
-        # BERTExtractor(),
+        BagOfWordsExtractor(),
+        NgramsExtractor(),
+        Word2VecExtractor(),
+        BERTExtractor(),
     ]
 
     # Loop through each feature extraction method
@@ -129,7 +139,7 @@ def main():
             print(f"Saved vectorizer to {vectorizer_filename}")
 
         # Train and evaluate classifiers on the extracted features
-        train_and_evaluate_classifiers(X_train, X_test, y_train_classification, y_test_classification, extractor.__class__.__name__)
+        train_and_evaluate_classifiers(X_train, X_test, y_train_classification, y_test_classification, extractor.__class__.__name__, extractor.vectorizer)
 
         # Train and evaluate regressors on the extracted features (for coordinates)
         train_and_evaluate_regressors(X_train, X_test, y_train_regression, y_test_regression, extractor.__class__.__name__)
