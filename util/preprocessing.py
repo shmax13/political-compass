@@ -16,7 +16,9 @@ stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
 # Load spacy NER model for entity recognition
-nlp = spacy.load('en_core_web_sm')
+# nlp = spacy.load('en_core_web_sm')
+# Load spacy NER model for entity recognition
+nlp = spacy.load('en_core_web_sm', disable=['parser', 'tagger'])
 
 # NOTE: the following approximated positions were assigned by us, and are not the result of scientific study
 president_positions = {
@@ -105,49 +107,63 @@ def preprocess_text(text):
     # Join tokens back into a string
     return ' '.join(cleaned_tokens)
 
-def extract_NE (text): 
-    doc=nlp(text)
-    enteties=[(ent.text, ent.label_) for ent in doc.ents]
-    return enteties
+# def extract_NE (text): 
+#     doc=nlp(text)
+#     enteties=[(ent.text, ent.label_) for ent in doc.ents]
+#     return enteties
+
+# Process NER tags in batches for speed
+def extract_ne_pipe(texts):
+    docs = nlp.pipe(texts, batch_size=50) 
+    return [[(ent.text, ent.label_) for ent in doc.ents] for doc in docs]
 
 def preprocess():
 
     with open('./speeches/speeches.json', 'r') as file:
         data = json.load(file)
         
+    
     # Extract speeches and labels
     speeches = []
     labels = []
     coordinates = []
     # TODO: deal with NE recognition (takes a rly long time at the moment)
-    #entities_list = []
+    entities_list = []
 
     for entry in data:
         speech_text = entry['transcript']
         president = entry['president']
-        label = assign_leaning(president)
-        labels.append(label)
-        position = assign_coordinates(president)
-        coordinates.append(position)
+        labels.append(assign_leaning(president))
+        coordinates.append(assign_coordinates(president))
+        speeches.append(speech_text)
 
         # Extract named entities
         #entities = extract_NE(speech_text)
         #entities_list.append(entities)
-    
-    # # preprocess speech text
-    # cleaned_speeches = [preprocess_text(speech) for speech in speeches]
-
-    return speeches, labels, coordinates
 
 
-def save_preprocessed_data(cleaned_speeches, labels, coordinates, filename='speeches/preprocessed_speeches.json'):
-    data = {'speeches': cleaned_speeches, 'labels': labels, 'coordinates': coordinates}
+    # Process named entities in batch for speeches
+    entities_list = extract_ne_pipe(speeches)
+
+    # Preprocess speech text
+    cleaned_speeches = [preprocess_text(speech) for speech in speeches]
+
+    # return speeches, labels, coordinates
+    return cleaned_speeches, labels, coordinates, entities_list
+
+
+# def save_preprocessed_data(cleaned_speeches, labels, coordinates, filename='speeches/preprocessed_speeches.json'):
+#     data = {'speeches': cleaned_speeches, 'labels': labels, 'coordinates': coordinates}
+#     with open(filename, 'w') as f:
+#         json.dump(data, f)
+def save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list, filename='speeches/preprocessed_speeches.json'):
+    data = {'speeches': cleaned_speeches, 'labels': labels, 'coordinates': coordinates, 'entities': entities_list}
     with open(filename, 'w') as f:
         json.dump(data, f)
 
 def main():
-    cleaned_speeches, labels, coordinates = preprocess()
-    save_preprocessed_data(cleaned_speeches, labels, coordinates)
+    cleaned_speeches, labels, coordinates, entities_list = preprocess()
+    save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list)
 
 
 if __name__ == '__main__':

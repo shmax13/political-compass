@@ -33,6 +33,7 @@ class BERTExtractor(BaseFeatureExtractor):
         combined_embedding = np.concatenate([cls_embedding, max_embedding, mean_embedding], axis=-1)
         
         # test with mean pca 200, cls and no pca, + cls and pca 100, 200, 300
+        # return cls_embedding
         return mean_embedding
     
 
