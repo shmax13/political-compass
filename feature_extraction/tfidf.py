@@ -14,8 +14,8 @@ class TfidfExtractor(BaseFeatureExtractor):
         X_tfidf = self.vectorizer.fit_transform(cleaned_speeches)
 
         # Apply PCA to reduce dimensionality
-        pca = PCA(n_components=200)
-        X_tfidf = pca.fit_transform(X_tfidf)
+        #pca = PCA(n_components=200)
+        #X_tfidf = pca.fit_transform(X_tfidf)
 
         X_train_tfidf, X_test_tfidf, y_train, y_test = train_test_split(X_tfidf, labels, test_size=0.2, random_state=42)
         return X_train_tfidf, X_test_tfidf, y_train, y_test
