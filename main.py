@@ -108,10 +108,10 @@ def main():
     # Create instances of feature extractors
     feature_extractors = [
         TfidfExtractor(),
-        BagOfWordsExtractor(),
-        Word2VecExtractor(),
-        NgramsExtractor(),
-        BERTExtractor(),
+        # BagOfWordsExtractor(),
+        # Word2VecExtractor(),
+        # NgramsExtractor(),
+        # BERTExtractor(),
     ]
 
     # Loop through each feature extraction method

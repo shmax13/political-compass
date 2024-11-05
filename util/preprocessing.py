@@ -148,7 +148,8 @@ def preprocess():
     # Preprocess speech text
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
 
-    return speeches, labels, coordinates
+    # return speeches, labels, coordinates
+    return cleaned_speeches, labels, coordinates, entities_list
 
 
 # def save_preprocessed_data(cleaned_speeches, labels, coordinates, filename='speeches/preprocessed_speeches.json'):
