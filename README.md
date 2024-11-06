@@ -31,6 +31,8 @@ A toolkit of classification and regression methods for analyzing political speec
 4. **Run Gradio UI**:  
    `python3 gradio_ui.py`
 
-## Features
+## Components & Evaluation
 
-TODO: add a table of our methods and results
+The folders `classifiers`, `regressors` and `vectorizers` contain models pre-trained by us, so the Gradio UI can be run without having to train the models yourself first.  
+A `main` run takes about 10 minutes on an Apple Silicon M2 chip. `preprocessing`takes 2-3 minutes.  
+A log of evaluation results is found in `eval.txt`. A more detailed discussion is done in `report.pdf`. 
