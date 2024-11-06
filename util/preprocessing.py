@@ -116,7 +116,7 @@ def extract_entities_batch(speeches, batch_size=32):
     return [[(ent.text, ent.label_) for ent in doc.ents] for doc in docs]
 
 def preprocess():
-    with open('C:/Users/almal/Desktop/T725MALV/final project/political-compass/speeches/speeches.json', 'r') as file:
+    with open('./speeches/speeches.json', 'r') as file:
         data = json.load(file)
         
     # Extract speeches and labels
@@ -132,14 +132,6 @@ def preprocess():
         coordinates.append(assign_coordinates(president))
         speeches.append(speech_text)
 
-        # Extract entities for each speech
-        # entities = extract_entities(speech_text)
-        # entities = extract_entities_batch(cleaned_speeches, batch_size=210)
-        # entities_list.append(entities)
-
-    # # Preprocess speech text
-    # cleaned_speeches = [preprocess_text(speech) for speech in speeches]
-    # Preprocess speech text
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
     
     # Extract entities for all speeches in batch
@@ -148,12 +140,12 @@ def preprocess():
     # return speeches, labels, coordinates, and entities
     return cleaned_speeches, labels, coordinates, entities_list
 
-def save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list, filename='C:/Users/almal/Desktop/T725MALV/final project/political-compass/speeches/preprocessed_speeches.json'):
+def save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list, filename='./speeches/preprocessed_speeches.json'):
     data = {
         'speeches': cleaned_speeches,
         'labels': labels,
         'coordinates': coordinates,
-        'entities': entities_list  # Save entities alongside the other data
+        'entities': entities_list  
     }
     with open(filename, 'w') as f:
         json.dump(data, f)
