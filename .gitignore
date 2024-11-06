@@ -1,5 +1,2 @@
-classifiers/
-vectorizers/
-regressors/
 **/__pycache__/
 compass_plot.png
