@@ -11,65 +11,63 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
+# Load spaCy model
+nlp = spacy.load("en_core_web_sm")
+
 # Initialize stopwords and lemmatizer
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
-# Load spacy NER model for entity recognition
-# nlp = spacy.load('en_core_web_sm')
-# Load spacy NER model for entity recognition
-nlp = spacy.load('en_core_web_sm', disable=['parser', 'tagger'])
-
 # NOTE: the following approximated positions were assigned by us, and are not the result of scientific study
 president_positions = {
-    'Andrew Jackson': (6, 6),      # Right-leaning authoritarian, despite some populist rhetoric
-    'Martin Van Buren': (-5, -3),  # Moderate left libertarian
-    'James K. Polk': (-6, 3),      # Left-leaning authoritarian due to expansionist policies
-    'Franklin Pierce': (-4, 1),    # Center-left with moderate authoritarian tendencies
-    'James Buchanan': (-3, 2),     # Moderate left, slightly authoritarian
-    'Grover Cleveland': (-4, -1),  # Center-left, moderate libertarian
-    'Woodrow Wilson': (-6, 8),     # Left-leaning authoritarian (due to WWI policies)
-    'Franklin D. Roosevelt': (-9, 6),  # Strong left, authoritarian (New Deal, WWII)
-    'Harry S. Truman': (-7, 4),    # Strong left-leaning authoritarian (Cold War)
-    'John F. Kennedy': (-4, -2),   # Center-left, moderate libertarian
-    'Lyndon B. Johnson': (-5, 5),  # Left-leaning authoritarian (Great Society)
-    'Jimmy Carter': (-4, -3),      # Moderate left, moderate libertarian
-    'Bill Clinton': (-3, -3),      # Center-left, moderate libertarian
-    'Barack Obama': (-4, -2),      # Center-left, moderate libertarian
-    'Joe Biden': (-5, 2),          # Moderate left, moderate authoritarian
-    'Thomas Jefferson': (-7, -8),  # Strong left, strongly libertarian (anti-centralization)
-    'James Madison': (-6, -7),     # Left-leaning libertarian (focused on individual rights)
-    'James Monroe': (-5, -5),      # Moderate left, libertarian (Monroe Doctrine)
-    'Andrew Johnson': (5, 4),      # Slightly right-leaning, authoritarian
-    'Abraham Lincoln': (-6, 7),    # Left-leaning authoritarian (due to wartime powers)
-    'Ulysses S. Grant': (4, 4),    # Right-leaning authoritarian (Reconstruction policies)
-    'Rutherford B. Hayes': (3, 2), # Slightly right-leaning, authoritarian
-    'James A. Garfield': (2, 1),   # Moderate right, slightly authoritarian
-    'Chester A. Arthur': (4, 1),   # Moderate right, moderately authoritarian
-    'Benjamin Harrison': (5, 3),   # Right-leaning authoritarian
-    'William McKinley': (6, 4),    # Strongly right-leaning, authoritarian
-    'Theodore Roosevelt': (-5, 5), # Left-leaning authoritarian (progressive policies)
-    'William Taft': (4, 3),        # Right-leaning authoritarian
-    'Calvin Coolidge': (8, 4),     # Strongly right-leaning, authoritarian
-    'Herbert Hoover': (7, 5),      # Right-leaning authoritarian
-    'Dwight D. Eisenhower': (3, 2),# Moderate right, slightly authoritarian
-    'Richard M. Nixon': (7, 8),    # Right-leaning authoritarian
-    'Gerald Ford': (4, 3),         # Right-leaning authoritarian
-    'Ronald Reagan': (9, 7),       # Strongly right-leaning, authoritarian
-    'George H. W. Bush': (6, 5),   # Right-leaning authoritarian
-    'George W. Bush': (6, 5),      # Right-leaning authoritarian
-    'Donald Trump': (8, 7),        # Strongly right-leaning, authoritarian
-    'John Adams': (3, 5),          # Moderate right, authoritarian (Federalist policies)
-    'John Quincy Adams': (2, 2),   # Moderate right, slightly authoritarian
-    'William Harrison': (5, 3),    # Right-leaning authoritarian
-    'John Tyler': (6, 4),          # Right-leaning authoritarian
-    'Zachary Taylor': (5, 4),      # Right-leaning authoritarian
-    'Millard Fillmore': (4, 3),    # Right-leaning authoritarian
-    'Warren G. Harding': (7, 6)    # Right-leaning authoritarian
+    'Andrew Jackson': (6, 6),      
+    'Martin Van Buren': (-5, -3),  
+    'James K. Polk': (-6, 3),      
+    'Franklin Pierce': (-4, 1),    
+    'James Buchanan': (-3, 2),     
+    'Grover Cleveland': (-4, -1),  
+    'Woodrow Wilson': (-6, 8),     
+    'Franklin D. Roosevelt': (-9, 6),
+    'Harry S. Truman': (-7, 4),    
+    'John F. Kennedy': (-4, -2),   
+    'Lyndon B. Johnson': (-5, 5),  
+    'Jimmy Carter': (-4, -3),      
+    'Bill Clinton': (-3, -3),      
+    'Barack Obama': (-4, -2),      
+    'Joe Biden': (-5, 2),          
+    'Thomas Jefferson': (-7, -8),  
+    'James Madison': (-6, -7),     
+    'James Monroe': (-5, -5),      
+    'Andrew Johnson': (5, 4),      
+    'Abraham Lincoln': (-6, 7),    
+    'Ulysses S. Grant': (4, 4),    
+    'Rutherford B. Hayes': (3, 2), 
+    'James A. Garfield': (2, 1),   
+    'Chester A. Arthur': (4, 1),   
+    'Benjamin Harrison': (5, 3),   
+    'William McKinley': (6, 4),    
+    'Theodore Roosevelt': (-5, 5), 
+    'William Taft': (4, 3),        
+    'Calvin Coolidge': (8, 4),     
+    'Herbert Hoover': (7, 5),      
+    'Dwight D. Eisenhower': (3, 2),
+    'Richard M. Nixon': (7, 8),    
+    'Gerald Ford': (4, 3),         
+    'Ronald Reagan': (9, 7),       
+    'George H. W. Bush': (6, 5),   
+    'George W. Bush': (6, 5),      
+    'Donald Trump': (8, 7),        
+    'John Adams': (3, 5),          
+    'John Quincy Adams': (2, 2),   
+    'William Harrison': (5, 3),    
+    'John Tyler': (6, 4),          
+    'Zachary Taylor': (5, 4),      
+    'Millard Fillmore': (4, 3),    
+    'Warren G. Harding': (7, 6)    
 }
 
 def assign_leaning(president):
-    x_value = president_positions.get(president, (0, 0))[0] # Default to (0, 0) if unknown
+    x_value = president_positions.get(president, (0, 0))[0]  # Default to (0, 0) if unknown
     if x_value < 0:
         return 'Left-Leaning'
     elif x_value > 0:
@@ -107,28 +105,25 @@ def preprocess_text(text):
     # Join tokens back into a string
     return ' '.join(cleaned_tokens)
 
-# def extract_NE (text): 
-#     doc=nlp(text)
-#     enteties=[(ent.text, ent.label_) for ent in doc.ents]
-#     return enteties
+# def extract_entities(text):
+#     """Extract named entities from the text using spaCy."""
+#     doc = nlp(text)
+#     return [(ent.text, ent.label_) for ent in doc.ents]
 
-# Process NER tags in batches for speed
-def extract_ne_pipe(texts):
-    docs = nlp.pipe(texts, batch_size=50) 
+def extract_entities_batch(speeches, batch_size=32):
+    """Extract named entities from a batch of texts using spaCy with a specified batch size."""
+    docs = list(nlp.pipe(speeches, batch_size=batch_size)) 
     return [[(ent.text, ent.label_) for ent in doc.ents] for doc in docs]
 
 def preprocess():
-
-    with open('./speeches/speeches.json', 'r') as file:
+    with open('C:/Users/almal/Desktop/T725MALV/final project/political-compass/speeches/speeches.json', 'r') as file:
         data = json.load(file)
         
-    
     # Extract speeches and labels
     speeches = []
     labels = []
     coordinates = []
-    # TODO: deal with NE recognition (takes a rly long time at the moment)
-    entities_list = []
+    entities_list = []  # List to store entities
 
     for entry in data:
         speech_text = entry['transcript']
@@ -137,34 +132,35 @@ def preprocess():
         coordinates.append(assign_coordinates(president))
         speeches.append(speech_text)
 
-        # Extract named entities
-        #entities = extract_NE(speech_text)
-        #entities_list.append(entities)
+        # Extract entities for each speech
+        # entities = extract_entities(speech_text)
+        # entities = extract_entities_batch(cleaned_speeches, batch_size=210)
+        # entities_list.append(entities)
 
-
-    # Process named entities in batch for speeches
-    entities_list = extract_ne_pipe(speeches)
-
+    # # Preprocess speech text
+    # cleaned_speeches = [preprocess_text(speech) for speech in speeches]
     # Preprocess speech text
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
+    
+    # Extract entities for all speeches in batch
+    entities_list = extract_entities_batch(cleaned_speeches, batch_size=280) 
 
-    # return speeches, labels, coordinates
+    # return speeches, labels, coordinates, and entities
     return cleaned_speeches, labels, coordinates, entities_list
 
-
-# def save_preprocessed_data(cleaned_speeches, labels, coordinates, filename='speeches/preprocessed_speeches.json'):
-#     data = {'speeches': cleaned_speeches, 'labels': labels, 'coordinates': coordinates}
-#     with open(filename, 'w') as f:
-#         json.dump(data, f)
-def save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list, filename='speeches/preprocessed_speeches.json'):
-    data = {'speeches': cleaned_speeches, 'labels': labels, 'coordinates': coordinates, 'entities': entities_list}
+def save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list, filename='C:/Users/almal/Desktop/T725MALV/final project/political-compass/speeches/preprocessed_speeches.json'):
+    data = {
+        'speeches': cleaned_speeches,
+        'labels': labels,
+        'coordinates': coordinates,
+        'entities': entities_list  # Save entities alongside the other data
+    }
     with open(filename, 'w') as f:
         json.dump(data, f)
 
 def main():
     cleaned_speeches, labels, coordinates, entities_list = preprocess()
     save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list)
-
 
 if __name__ == '__main__':
     main()
