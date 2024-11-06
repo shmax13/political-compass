@@ -70,10 +70,8 @@ def assign_leaning(president):
     x_value = president_positions.get(president, (0, 0))[0]  # Default to (0, 0) if unknown
     if x_value < 0:
         return 'Left-Leaning'
-    elif x_value > 0:
-        return 'Right-Leaning'
     else:
-        return 'Unknown'
+        return 'Right-Leaning'
     
 def assign_coordinates(president):
     global president_positions  # Allows modification of the original dictionary
@@ -132,6 +130,7 @@ def preprocess():
         coordinates.append(assign_coordinates(president))
         speeches.append(speech_text)
 
+       
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
     
     # Extract entities for all speeches in batch
@@ -147,6 +146,7 @@ def save_preprocessed_data(cleaned_speeches, labels, coordinates, entities_list,
         'coordinates': coordinates,
         'entities': entities_list  
     }
+
     with open(filename, 'w') as f:
         json.dump(data, f)
 

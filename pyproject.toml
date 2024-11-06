@@ -18,6 +18,7 @@ gensim = "^4.3.3"
 spacy = "3.7.5"
 transformers = "^4.46.1"
 torch = "^2.5.1"
+shap = "^0.46.0"
 
 [build-system]
 requires = ["poetry-core"]
