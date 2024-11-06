@@ -134,7 +134,7 @@ def preprocess():
     cleaned_speeches = [preprocess_text(speech) for speech in speeches]
     
     # Extract entities for all speeches in batch
-    entities_list = extract_entities_batch(cleaned_speeches, batch_size=280) 
+    # entities_list = extract_entities_batch(cleaned_speeches, batch_size=280) 
 
     # return speeches, labels, coordinates, and entities
     return cleaned_speeches, labels, coordinates, entities_list

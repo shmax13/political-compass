@@ -55,7 +55,7 @@ def make_prediction(input_text):
                   'Random_Forest_Regressor_(x)', 'Random_Forest_Regressor_(y)',
                   'Support_Vector_Regressor_(x)', 'Support_Vector_Regressor_(y)']
 
-    vectorizers = ['TfidfExtractor', 'BagOfWordsExtractor', 'NgramsExtractor', 'Word2VecExtractor', 'BERTExtractor']
+    vectorizers = ['TfidfExtractor']#, 'BagOfWordsExtractor', 'NgramsExtractor', 'Word2VecExtractor', 'BERTExtractor']
 
 
     all_predictions = []
